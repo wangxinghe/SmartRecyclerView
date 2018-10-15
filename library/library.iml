@@ -22,6 +22,28 @@
         <option name="PROJECT_TYPE" value="1" />
       </configuration>
     </facet>
+    <facet type="kotlin-language" name="Kotlin">
+      <configuration version="3" platform="JVM 1.6" useProjectSettings="false">
+        <compilerSettings />
+        <compilerArguments>
+          <option name="destination" value="$MODULE_DIR$/build/tmp/kotlin-classes/debug" />
+          <option name="classpath" value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.2.71/4ce93f539e2133f172f1167291a911f83400a5d0/kotlin-stdlib-jdk7-1.2.71.jar:/Users/wangxinghe/.gradle/caches/transforms-1/files-1.1/design-27.0.2.aar/79b03860340090c6130d1ccc2c8b8180/jars/classes.jar:/Users/wangxinghe/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/2f5b1ea51c0949a6816997273c88a781/jars/classes.jar:/Users/wangxinghe/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-27.0.2.aar/550ea3cb77b6fe8658001b436b8e3bff/jars/classes.jar:/Users/wangxinghe/.gradle/caches/transforms-1/files-1.1/materialish-progress-1.7.aar/ba759ef0f373395f19b62ef95b763f04/jars/classes.jar:/Users/wangxinghe/.gradle/caches/transforms-1/files-1.1/butterknife-8.8.1.aar/26b1dd335334ed2c9c93e2808dbcc319/jars/classes.jar:/Users/wangxinghe/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.71/d9717625bb3c731561251f8dd2c67a1011d6764c/kotlin-stdlib-1.2.71.jar:/Users/wangxinghe/.gradle/caches/transforms-1/files-1.1/support-v4-27.0.2.aar/9af419db51cbcba885f3c5cc2b82c131/jars/classes.jar:/Users/wangxinghe/.gradle/caches/transforms-1/files-1.1/transition-27.0.2.aar/d8e08f33abbcd4f8db9123da51245842/jars/classes.jar:/Users/wangxinghe/.gradle/caches/transforms-1/files-1.1/support-fragment-27.0.2.aar/4e6a7a170100ba716d27bb6caeff2325/jars/classes.jar:/Users/wangxinghe/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.0.2.aar/04d05ededdd055fa1536159e305a7dc8/jars/classes.jar:/Users/wangxinghe/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.0.2.aar/57d82a08eeda777abbb1950b228adbcc/jars/classes.jar:/Users/wangxinghe/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.0.2.aar/67bd3ed1e43d69528c635a5d55ca1e35/jars/classes.jar:/Users/wangxinghe/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.0.2.aar/1d4ad3145b6e0ea3f30210c0bfeba98c/jars/classes.jar:/Users/wangxinghe/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.0.2.aar/bd9fe2b3860fb45ab6f739e0a97c17b5/jars/classes.jar:/Users/wangxinghe/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/38b965d8d55c2c54940b830706fc408f/jars/classes.jar:/Users/wangxinghe/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife-annotations/8.8.1/bc373fb6bc7bca3035041b924f158fd2b946ee8d/butterknife-annotations-8.8.1.jar:/Users/wangxinghe/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/27.0.2/b9ef4342c934a1a8b107506273dc8061662a322/support-annotations-27.0.2.jar:/Users/wangxinghe/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.2.71/ba18ca1aa0e40eb6f1865b324af2f4cbb691c1ec/kotlin-stdlib-common-1.2.71.jar:/Users/wangxinghe/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar:/Users/wangxinghe/.gradle/caches/transforms-1/files-1.1/runtime-1.0.3.aar/d404cbba892628e783db851a15134fda/jars/classes.jar:/Users/wangxinghe/.gradle/caches/modules-2/files-2.1/android.arch.lifecycle/common/1.0.3/7d7f60c4783872861222166f6164215f8951c7b1/common-1.0.3.jar:/Users/wangxinghe/.gradle/caches/modules-2/files-2.1/android.arch.core/common/1.0.0/a2d487452376193fc8c103dd2b9bd5f2b1b44563/common-1.0.0.jar:/Users/wangxinghe/Library/Android/sdk/platforms/android-27/android.jar" />
+          <option name="noStdlib" value="true" />
+          <option name="noReflect" value="true" />
+          <option name="moduleName" value="library_debug" />
+          <option name="addCompilerBuiltIns" value="true" />
+          <option name="loadBuiltInsFromDependencies" value="true" />
+          <option name="languageVersion" value="1.2" />
+          <option name="apiVersion" value="1.2" />
+          <option name="pluginOptions">
+            <array />
+          </option>
+          <option name="pluginClasspaths">
+            <array />
+          </option>
+        </compilerArguments>
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
     <output url="file://$MODULE_DIR$/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes" />
@@ -106,14 +128,18 @@
     <orderEntry type="library" name="Gradle: com.android.support:animated-vector-drawable-27.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-compat-27.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.jakewharton:butterknife-annotations:8.8.1@jar" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.2.71@jar" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.71@jar" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.core:common:1.0.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:recyclerview-v7-27.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.2.71@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.squareup:javawriter:2.1.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-media-compat-27.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-vector-drawable-27.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-core-ui-27.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-core-utils-27.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-annotations:27.0.2@jar" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.code.findbugs:jsr305:2.0.1@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test.espresso:espresso-core-3.0.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: javax.inject:javax.inject:1@jar" level="project" />

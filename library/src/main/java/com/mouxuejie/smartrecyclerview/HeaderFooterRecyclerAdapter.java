@@ -10,6 +10,7 @@ public class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
 
     private static final int BASE_HEADER_VIEW_TYPE = -1 << 10;
     private static final int BASE_FOOTER_VIEW_TYPE = -1 << 11;
+    private static final int BASE_EMPTY_VIEW_TYPE = BASE_FOOTER_VIEW_TYPE - 1;
 
     private int mLatestHeaderViewType = BASE_HEADER_VIEW_TYPE;
     private int mLatestFooterViewType = BASE_FOOTER_VIEW_TYPE;
@@ -22,9 +23,7 @@ public class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
     private ArrayList<FixedViewInfo> mHeaderViewInfos;
     private ArrayList<FixedViewInfo> mFooterViewInfos;
 
-    // Used as a placeholder in case the provided info views are indeed null.
-    // Currently only used by some CTS tests, which may be removed.
-    static final ArrayList<FixedViewInfo> EMPTY_INFO_LIST = new ArrayList<FixedViewInfo>();
+    private FixedViewInfo mEmptyViewInfo;
 
     /**
      * A class that represents a fixed view in a list, for example a header at the top
@@ -77,19 +76,21 @@ public class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
     };
 
     public HeaderFooterRecyclerAdapter(ArrayList<FixedViewInfo> headerViewInfos,
-                                 ArrayList<FixedViewInfo> footerViewInfos,
+                                 ArrayList<FixedViewInfo> footerViewInfos, FixedViewInfo emptyViewInfo,
                                  RecyclerView recyclerView, RecyclerView.Adapter adapter) {
         if (headerViewInfos == null) {
-            mHeaderViewInfos = EMPTY_INFO_LIST;
+            mHeaderViewInfos = new ArrayList<FixedViewInfo>();
         } else {
             mHeaderViewInfos = headerViewInfos;
         }
 
         if (footerViewInfos == null) {
-            mFooterViewInfos = EMPTY_INFO_LIST;
+            mFooterViewInfos = new ArrayList<FixedViewInfo>();
         } else {
             mFooterViewInfos = footerViewInfos;
         }
+
+        mEmptyViewInfo = emptyViewInfo;
 
         mRecyclerView = recyclerView;
         setAdapter(adapter);
@@ -97,7 +98,9 @@ public class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (isHeaderViewType(viewType)) {
+        if (isEmptyViewType(viewType)) {
+            return createEmptyViewHolder();
+        } else if (isHeaderViewType(viewType)) {
             return createHeaderViewHolder(viewType);
         } else if (isFooterViewType(viewType)) {
             return createFooterViewHolder(viewType);
@@ -108,26 +111,28 @@ public class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (position >= getHeadersCount() && position < getHeadersCount() + getItemCount()) {
-            mAdapter.onBindViewHolder(holder, position);
+            mAdapter.onBindViewHolder(holder, position - getHeadersCount());
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (isHeaderView(position)) {
+        if (isEmpty()) {
+            return BASE_EMPTY_VIEW_TYPE;
+        } else if (isHeaderView(position)) {
             return mHeaderViewInfos.get(position).viewType;
         } else if (isFooterView(position)) {
             return mFooterViewInfos.get(position - getHeadersCount() - mAdapter.getItemCount()).viewType;
         }
-        return mAdapter.getItemViewType(position);
+        return mAdapter.getItemViewType(position - getHeadersCount());
     }
 
     @Override
     public int getItemCount() {
-        if (mAdapter != null) {
-            return getFootersCount() + getHeadersCount() + mAdapter.getItemCount();
+        if (isEmpty()) {
+            return 1;
         } else {
-            return getFootersCount() + getHeadersCount();
+            return getFootersCount() + getHeadersCount() + mAdapter.getItemCount();
         }
     }
 
@@ -141,6 +146,13 @@ public class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
             mAdapter.registerAdapterDataObserver(mAdapterDataObserver);
             mAdapter.onAttachedToRecyclerView(mRecyclerView);
         }
+    }
+
+    public void setEmptyView(View v) {
+        final FixedViewInfo fixedViewInfo = new FixedViewInfo();
+        fixedViewInfo.view = v;
+        fixedViewInfo.viewType = BASE_EMPTY_VIEW_TYPE;
+        mEmptyViewInfo = fixedViewInfo;
     }
 
     public void addHeaderView(View v) {
@@ -204,7 +216,7 @@ public class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
     }
 
     private boolean containsHeaderView(View v) {
-        for (int i = 0; i < mHeaderViewInfos.size(); i++) {
+        for (int i = 1; i < mHeaderViewInfos.size(); i++) {
             FixedViewInfo info = mHeaderViewInfos.get(i);
             if (info.view == v) {
                 return true;
@@ -272,12 +284,21 @@ public class HeaderFooterRecyclerAdapter extends RecyclerView.Adapter {
                 && position <= getHeadersCount() + getFootersCount() + mAdapter.getItemCount();
     }
 
+    private boolean isEmptyViewType(int viewType) {
+        return viewType == BASE_EMPTY_VIEW_TYPE;
+    }
+
     private boolean isHeaderViewType(int viewType) {
         return viewType >= BASE_HEADER_VIEW_TYPE && viewType < 0;
     }
 
     private boolean isFooterViewType(int viewType) {
         return viewType >= BASE_FOOTER_VIEW_TYPE && viewType < BASE_HEADER_VIEW_TYPE;
+    }
+
+    private RecyclerView.ViewHolder createEmptyViewHolder() {
+        View emptyView = mEmptyViewInfo.view;
+        return new RecyclerView.ViewHolder(emptyView){};
     }
 
     private RecyclerView.ViewHolder createHeaderViewHolder(int viewType) {

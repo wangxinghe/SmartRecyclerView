@@ -1,7 +1,9 @@
 package com.mouxuejie.smartrecyclerview;
 
 import android.support.annotation.IntDef;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -22,51 +24,58 @@ public abstract class AbstractLoadMoreFooter {
     @Retention(RetentionPolicy.SOURCE)
     public @interface STATE {}
 
-    @STATE
-    private int mState;
+    @LoadMoreFooter.STATE
+    private int mState = STATE_DISABLED;
 
-    public OnLoadMoreListener mOnLoadMoreListener;
+    public LoadMoreFooter.OnLoadMoreListener mOnLoadMoreListener;
 
     public interface OnLoadMoreListener {
-        void loadMore();
+        void onLoadMore();
     }
 
-    public AbstractLoadMoreFooter(RecyclerView recyclerView, OnLoadMoreListener onLoadMoreListener) {
+    public AbstractLoadMoreFooter(HeaderFooterRecyclerView recyclerView, LoadMoreFooter.OnLoadMoreListener onLoadMoreListener) {
         mOnLoadMoreListener = onLoadMoreListener;
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (!recyclerView.canScrollVertically(1)) {
-                    loadMore();
+                Log.d("wxh", "onScrollStateChanged");
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    tryToLoadMore((HeaderFooterRecyclerView) recyclerView);
                 }
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (!recyclerView.canScrollVertically(1)) {
-                    loadMore();
-                }
+                Log.d("wxh", "onScrolled");
+                tryToLoadMore((HeaderFooterRecyclerView) recyclerView);
             }
         });
     }
 
-    public void setState(@STATE int state) {
+    public void setState(@LoadMoreFooter.STATE int state) {
         mState = state;
     }
 
-    @STATE
+    @LoadMoreFooter.STATE
     public int getState() {
         return mState;
     }
 
-    private void loadMore() {
-        if (mState == STATE_READY || mState == STATE_FAILED) {
+    private void tryToLoadMore(HeaderFooterRecyclerView recyclerView) {
+        final int lastVisibleItemPosition = ((LinearLayoutManager)
+                recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+        if (lastVisibleItemPosition == recyclerView.getItemCount() - 1 && isReadyLoadMore(recyclerView)) {
             setState(STATE_LOADING);
             if (mOnLoadMoreListener != null) {
-                mOnLoadMoreListener.loadMore();
+                mOnLoadMoreListener.onLoadMore();
             }
         }
     }
+
+    private boolean isReadyLoadMore(HeaderFooterRecyclerView recyclerView) {
+        return !recyclerView.isEmpty() && (mState == STATE_READY || mState == STATE_FAILED);
+    }
+
 }

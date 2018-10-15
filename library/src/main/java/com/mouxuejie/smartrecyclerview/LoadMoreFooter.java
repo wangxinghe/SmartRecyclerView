@@ -7,60 +7,63 @@ import android.widget.TextView;
 
 import com.pnikosis.materialishprogress.ProgressWheel;
 
+import com.mouxuejie.smartrecyclerview.R.*;
+
 public class LoadMoreFooter extends AbstractLoadMoreFooter {
 
-//    @BindView(R2.id.progress_wheel)
-    ProgressWheel mProgressWheel;
+//    @BindView(R.id.progress_wheel)
+    ProgressWheel progressWheel;
 
-//    @BindView(R2.id.tv_text)
-    TextView mTvText;
+//    @BindView(id.tv_text)
+    TextView tvText;
 
     public LoadMoreFooter(Context context, HeaderFooterRecyclerView recyclerView, OnLoadMoreListener onLoadMoreListener) {
         super(recyclerView, onLoadMoreListener);
-        View footerView = LayoutInflater.from(context).inflate(R.layout.footer_load_more, null);
+        View footerView = LayoutInflater.from(context).inflate(layout.footer_load_more, null);
 //        ButterKnife.bind(this, footerView);
-        mProgressWheel = footerView.findViewById(R.id.progress_wheel);
-        mTvText = footerView.findViewById(R.id.tv_text);
+        progressWheel = footerView.findViewById(R.id.progress_wheel);
+        tvText = footerView.findViewById(R.id.tv_text);
         recyclerView.addFooterView(footerView);
     }
 
+    @Override
     public void setState(@STATE int state) {
         super.setState(state);
         switch (state) {
             case STATE_DISABLED:
-                mProgressWheel.setVisibility(View.INVISIBLE);
-                mProgressWheel.stopSpinning();
-                mTvText.setVisibility(View.INVISIBLE);
-                mTvText.setText(null);
-                mTvText.setClickable(false);
+                progressWheel.setVisibility(View.INVISIBLE);
+                progressWheel.stopSpinning();
+                tvText.setVisibility(View.INVISIBLE);
+                tvText.setText(null);
+                tvText.setClickable(false);
                 break;
             case STATE_LOADING:
-                mProgressWheel.setVisibility(View.VISIBLE);
-                mProgressWheel.spin();
-                mTvText.setVisibility(View.INVISIBLE);
-                mTvText.setText(null);
-                mTvText.setClickable(false);
+                progressWheel.setVisibility(View.VISIBLE);
+                progressWheel.spin();
+                tvText.setVisibility(View.INVISIBLE);
+                tvText.setText(null);
+                tvText.setClickable(false);
                 break;
             case STATE_FINISHED:
-                mProgressWheel.setVisibility(View.INVISIBLE);
-                mProgressWheel.stopSpinning();
-                mTvText.setVisibility(View.VISIBLE);
-                mTvText.setText(R.string.load_more_finished);
-                mTvText.setClickable(false);
+                progressWheel.setVisibility(View.INVISIBLE);
+                progressWheel.stopSpinning();
+                tvText.setVisibility(View.VISIBLE);
+                tvText.setText(R.string.load_more_finished);
+                tvText.setClickable(false);
                 break;
             case STATE_READY:
-                mProgressWheel.setVisibility(View.INVISIBLE);
-                mProgressWheel.stopSpinning();
-                mTvText.setVisibility(View.VISIBLE);
-                mTvText.setText(null);
-                mTvText.setClickable(true);
+                progressWheel.setVisibility(View.INVISIBLE);
+                progressWheel.stopSpinning();
+                tvText.setVisibility(View.VISIBLE);
+                tvText.setText(null);
+                tvText.setClickable(true);
                 break;
             case STATE_FAILED:
-                mProgressWheel.setVisibility(View.INVISIBLE);
-                mProgressWheel.stopSpinning();
-                mTvText.setVisibility(View.VISIBLE);
-                mTvText.setText(R.string.load_more_failed);
-                mTvText.setClickable(true);
+                progressWheel.setVisibility(View.INVISIBLE);
+                progressWheel.stopSpinning();
+                tvText.setVisibility(View.VISIBLE);
+                tvText.setText(R.string.load_more_failed);
+                tvText.setClickable(true);
                 break;
             default:
                 throw new AssertionError("Unknown load more state.");
